@@ -15,7 +15,7 @@ def sum(a,b):
 ```
 
 
-Html
+HTML
 ```html
 {% load nativecall %}
 
