@@ -1,6 +1,6 @@
 
 (()=>{
-    class A{
+    class NativeCall{
         constructor(){
         }
         load_command(event){
