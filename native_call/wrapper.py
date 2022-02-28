@@ -1,7 +1,7 @@
 from asyncio import get_event_loop
 import inspect
 
-from native_call.exeptions import InvalidParameterTypeError
+from native_call.exceptions import InvalidParameterTypeError
 
 
 class WrappedFunction:

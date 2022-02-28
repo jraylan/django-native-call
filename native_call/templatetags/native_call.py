@@ -1,7 +1,7 @@
 from django import template
 from django.utils.safestring import mark_safe
 
-from native_call.exeptions import InvalidParameterTypeError
+from native_call.exceptions import InvalidParameterTypeError
 from native_call.registry import registry
 from native_call.models import FunctionCallCSRF
 

@@ -3,7 +3,7 @@ import traceback
 from django.db import transaction
 
 from .constants import *
-from .exeptions import *
+from .exceptions import *
 from .wrapper import WrappedFunction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
