@@ -11,7 +11,7 @@ register = template.Library()
 def dnc_script():
     js = template.Template('native_call/javascript.html')
     c = template.Context({})
-    return mark_safe(js.render(c))
+    return js.render(c)
 
 
 class NativeFunctionNode(template.Node):
