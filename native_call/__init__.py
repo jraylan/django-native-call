@@ -3,5 +3,6 @@ from . import exceptions
 
 __all__ = [
     'registry',
-    'exceptions'
+    'exceptions',
+    'templatetags'
 ]
