@@ -1,4 +1,5 @@
 from django import template
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from native_call.exceptions import InvalidParameterTypeError
@@ -9,9 +10,7 @@ register = template.Library()
 
 @register.simple_tag
 def dnc_script():
-    js = template.Template('native_call/javascript.html')
-    c = template.Context({})
-    return js.render(c)
+    return mark_safe(render_to_string('native_call/javascript.html', {}))
 
 
 class NativeFunctionNode(template.Node):
