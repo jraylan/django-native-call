@@ -3,7 +3,7 @@
     class NativeCall{
         constructor(){
         }
-        load_command(event){
+        load_function(event){
             if(!(event instanceof Event)){
                 throw("Argument must be a event.")
             }
