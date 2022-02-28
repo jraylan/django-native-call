@@ -1,5 +1,5 @@
 from .registry import registry
-import exceptions
+from . import exceptions
 
 __all__ = [
     'registry',
