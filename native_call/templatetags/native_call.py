@@ -2,7 +2,7 @@ from django import template
 from django.utils.safestring import mark_safe
 
 from native_call.exceptions import InvalidParameterTypeError
-from native_call.registry import registry
+from native_call.manager import registry
 
 register = template.Library()
 
