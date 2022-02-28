@@ -1,9 +1,12 @@
-from setuptools import setup
+
+from setuptools import find_packages, setup
 
 setup(
     name='django-native-call',
     version='0.0.3',
-    packages=['native_call', 'native_call.migrations', 'native_call.templatetags', 'native_call.templates'],
+    packages=find_packages(),
+    package_data={'': ['native_call/templates/native_call/*.html']},
+    include_package_data=True,
     url='',
     license='apache',
     author='jraylan',
