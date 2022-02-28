@@ -15,5 +15,5 @@ class FunctionCallCSRF(models.Model):
     def save(self, *args, **kwargs):
         if not self.authorization_token:
             self.authorization_token = uuid.uuid4().hex
-        return super(self, FunctionCallCSRF).save(*args, **kwargs)
+        return super(FunctionCallCSRF, self).save(*args, **kwargs)
 

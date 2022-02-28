@@ -23,10 +23,10 @@ class NativeFunctionNode(template.Node):
         function = registry.get_function(self.function_name)
         if function:
             try:
-                function.validate(context['user'])
+                function.validate(context['request'].user)
                 csrf = FunctionCallCSRF()
                 csrf.function_name = self.function_name
-                csrf.user = context['user']
+                csrf.user = context['request'].user
                 csrf.save()
                 return 'dnc-csrf="{}"'.format(csrf.authorization_token)
             except InvalidParameterTypeError:
