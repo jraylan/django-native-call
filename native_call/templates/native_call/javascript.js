@@ -1,10 +1,9 @@
 
 (()=>{
-
     class A{
         constructor(){
         }
-        load_command(a){
+        load_command(event){
             if(!(event instanceof Event)){
                 throw("Argument must be a event.")
             }
@@ -12,28 +11,34 @@
                 throw("Event must be a trusted event")
             }
             let csrf = event.target.getAttribute('dnc-csrf')
+            event.target.setAttribute("dnc-csrf", "")
             if(!csrf || !csrf.length){
                 throw("This element are not allowed to perform this action")
             }
             return (...args)=>{
                 return new Promise((resolve, reject)=>{
                     try{
-                        let ajax
-                        if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-                            ajax  = new XMLHttpRequest();
-                        } else if (window.ActiveXObject) { // IE 6 and older
-                            ajax  = new ActiveXObject("Microsoft.XMLHTTP");
-                        }
+                        let ajax = new XMLHttpRequest();
                         let formData = new FormData();
                         formData.append('params[]', args);
                         formData.append("dnc_csrf", csrf);
                         ajax.open("POST", "{% url 'nativecall_call' %}");
-                        if(ajax.readyState == 4 && ajax.status == 200){
-                            let data
-                            try{
-                                resolve(JSON.parse(ajax.responseText));
-                            }catch(e){
-                                reject(ajax.status);
+                        ajax.onreadystatechange = ()=>{
+                            if(ajax.readyState == 4){
+                                if(ajax.status == 200){
+                                    try{
+                                        resolve(JSON.parse(ajax.responseText));
+                                    }catch(e){
+                                        reject(ajax.status);
+                                    }
+                                }
+                                else{
+                                    reject(ajax.status);
+                                }
+                                csrf = ajax.getResponseHeader("X-DNC-CSRF")
+                                if(csrf){
+                                    event.target.setAttribute("dnc-csrf", csrf)
+                                }
                             }
                         }
                         ajax.send(formData);

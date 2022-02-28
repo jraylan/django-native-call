@@ -145,7 +145,7 @@ class Registry:
                 traceback.print_exc()
                 response = HttpResponse('{}', status=500)
 
-        response['X_DNC_CSRF'] = new_call_csrf.authorization_token
+        response['X-DNC-CSRF'] = new_call_csrf.authorization_token
         
         return response
 
