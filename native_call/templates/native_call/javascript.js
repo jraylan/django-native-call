@@ -25,9 +25,7 @@
                             ajax  = new ActiveXObject("Microsoft.XMLHTTP");
                         }
                         let formData = new FormData();
-                        args.map((arg, i)=>{
-                            formData.append('params[]', arg);
-                        })
+                        formData.append('params[]', args);
                         formData.append("dnc_csrf", csrf);
                         ajax.open("POST", "{% url 'nativecall_call' %}");
                         if(ajax.readyState == 4 && ajax.status == 200){
