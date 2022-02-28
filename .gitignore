@@ -1,0 +1,5 @@
+__pycache__/
+build/
+dist/
+.idea/
+django_native_call.egg-info/
