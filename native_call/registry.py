@@ -112,7 +112,7 @@ class Registry:
             call_csrf = get_object_or_404(
                 models.FunctionCallCSRF,
                 authorization_token=request.POST.get('dnc_csrf'),
-                user_id=request.User.id
+                user_id=request.user.id
             )
             call_csrf = models.FunctionCallCSRF.objects.select_for_update().get(id=call_csrf.id)
 
