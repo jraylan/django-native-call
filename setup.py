@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-native-call',
-    version='0.1.3',
+    version='0.1.4',
     packages=['native_call', 'native_call.migrations'],
     url='',
     license='apache',

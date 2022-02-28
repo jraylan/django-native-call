@@ -10,7 +10,7 @@ register = template.Library()
 
 @register.simple_tag
 def dnc_script():
-    js = template.Template('./templates/javascript.html')
+    js = template.Template('native_call/javascript.html')
     c = template.Context({})
     return mark_safe(js.render(c))
 
