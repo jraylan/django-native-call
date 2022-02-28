@@ -29,7 +29,7 @@
                             formData.append('params[]', arg);
                         })
                         formData.append("dnc_csrf", csrf);
-                        ajax.open("POST", "{% url 'nativecall:call' %}");
+                        ajax.open("POST", "{% url 'nativecall_call' %}");
                         if(ajax.readyState == 4 && ajax.status == 200){
                             let data
                             try{
