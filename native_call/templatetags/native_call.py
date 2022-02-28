@@ -1,9 +1,9 @@
 from django import template
 from django.utils.safestring import mark_safe
 
-from .exeptions import InvalidParameterTypeError
-from .registry import registry
-from .models import FunctionCallCSRF
+from native_call.exeptions import InvalidParameterTypeError
+from native_call.registry import registry
+from native_call.models import FunctionCallCSRF
 
 register = template.Library()
 
