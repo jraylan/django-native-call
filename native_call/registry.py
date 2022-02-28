@@ -151,7 +151,7 @@ class Registry:
 
     def get_urls(self):
         return [
-          url("/call/", self.view, name="nativecall_call")
+          url("call/", self.view, name="nativecall_call")
         ]
 
     @property
