@@ -3,7 +3,6 @@ from django.utils.safestring import mark_safe
 
 from native_call.exceptions import InvalidParameterTypeError
 from native_call.registry import registry
-from native_call.models import FunctionCallCSRF
 
 register = template.Library()
 
@@ -21,6 +20,7 @@ class NativeFunctionNode(template.Node):
         self.function_name = function_name
 
     def render(self, context):
+        from native_call.models import FunctionCallCSRF
         function = registry.get_function(self.function_name)
         if function:
             try:
