@@ -6,4 +6,4 @@ class DjangoNativeCallConfig(AppConfig):
     name = 'native_call'
 
     def ready(self):
-        from .templatetags import native_call
+        pass
