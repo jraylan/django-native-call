@@ -103,7 +103,7 @@ class Registry:
     def get_function(self, name):
         return self.__registered_functions.get(name, {}).get('wrapper')
 
-    def as_view(self, request):
+    def view(self, request):
         if request.method != 'POST':
             return HttpResponse("{}", status=405)
 
@@ -151,7 +151,7 @@ class Registry:
 
     def get_urls(self):
         return [
-          url("/call/", self.as_view(), name="nativecall:call")
+          url("/call/", self.view, name="nativecall_call")
         ]
 
     @property
