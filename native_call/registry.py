@@ -117,7 +117,7 @@ class Registry:
             call_csrf = models.FunctionCallCSRF.objects.select_for_update().get(id=call_csrf.id)
 
             new_call_csrf = models.FunctionCallCSRF()
-            new_call_csrf.user.id = request.user.id
+            new_call_csrf.user_id = request.user.id
             new_call_csrf.function_name = call_csrf.function_name
             new_call_csrf.save()
             call_csrf.delete()
