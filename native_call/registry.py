@@ -127,12 +127,12 @@ class Registry:
         params = request.POST.getlist('params[]') or []
 
         function = self.get_function(function_name)
-
-        if not function.validate(request.user, params):
-            response = HttpResponse('{}', status=401)
-        else:
-            # noinspection PyBroadException
-            try:
+            
+        # noinspection PyBroadException
+        try:
+            if not function.validate(request.user, params):
+                response = HttpResponse('{}', status=401)
+            else:
                 result = function(*params)
 
                 try:
@@ -141,9 +141,9 @@ class Registry:
                     response = HttpResponse('{}', status=500)
                 else:
                     response = HttpResponse(result, status=200)
-            except Exception:
-                traceback.print_exc()
-                response = HttpResponse('{}', status=500)
+        except Exception:
+            traceback.print_exc()
+            response = HttpResponse('{}', status=500)
 
         response['X-DNC-CSRF'] = new_call_csrf.authorization_token
         
