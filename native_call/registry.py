@@ -2,7 +2,6 @@ import traceback
 
 from django.db import transaction
 
-from . import models
 from .constants import *
 from .exeptions import *
 from .wrapper import WrappedFunction
@@ -108,6 +107,7 @@ class Registry:
         if request.method != 'POST':
             return HttpResponse("{}", status=405)
 
+        from . import models
         with transaction.atomic():
             call_csrf = get_object_or_404(
                 models.FunctionCallCSRF,
