@@ -23,11 +23,11 @@ HTML
 
 <script type="text/javascript">
 
-    function soma(event){
+    function handle_click(event){
         NativeCall.load_function(event)(1,2).then(alert).catch(alert)
     }
 </script>
-<a {% native_function soma %} onclick="soma(event)"> Soma 1+2</a>
+<a {% native_function soma %} onclick="handle_click(event)"> Soma 1+2</a>
 
 ```
 
