@@ -32,12 +32,12 @@ class WrappedFunction:
         if params:
             for i, arg in enumerate(self.arg_types):
                 try:
-                    params[i] = arg[i](params[i])
+                    params[i] = arg(params[i])
                 except ValueError:
                     raise InvalidParameterTypeError(
                         'Sent parameter "{} must be of type {}'.format(
                             params[i],
-                            arg[i].__name__
+                            arg.__name__
                         )
                     )
                 except IndexError:
