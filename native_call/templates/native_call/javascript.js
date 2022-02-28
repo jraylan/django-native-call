@@ -20,7 +20,9 @@
                     try{
                         let ajax = new XMLHttpRequest();
                         let formData = new FormData();
-                        formData.append('params[]', args);
+                        args.map(v=>{
+                            formData.append('params[]', v)
+                        })
                         formData.append("dnc_csrf", csrf);
                         ajax.open("POST", "{% url 'nativecall_call' %}");
                         ajax.onreadystatechange = ()=>{
