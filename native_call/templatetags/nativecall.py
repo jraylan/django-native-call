@@ -24,11 +24,15 @@ class NativeFunctionNode(template.Node):
         function = registry.get_function(self.function_name)
 
         parsedArgs = []
-        for a in self.args:
-            if a in context:
-                parsedArgs.append(context[a])
+        for arg in self.args:
+            ob = None
+            for a in arg.split('.'):
+                if a in (ob or context):
+                    ob = (ob or context)[a]
+            if ob:
+                parsedArgs.append(ob)
             else:
-                parsedArgs.append(a)
+                parsedArgs.append(arg)
 
         if function:
             try:
