@@ -22,13 +22,21 @@ class NativeFunctionNode(template.Node):
     def render(self, context):
         from native_call.models import FunctionCallCSRF
         function = registry.get_function(self.function_name)
+
+        parsedArgs = []
+        for a in self.args:
+            if a in context:
+                parsedArgs.append(context[a])
+            else:
+                parsedArgs.append(a)
+
         if function:
             try:
                 function.validate(context['request'].user)
                 csrf = FunctionCallCSRF()
                 csrf.function_name = self.function_name
                 csrf.user = context['request'].user
-                csrf.args = str(self.args)
+                csrf.args = str(parsedArgs)
                 csrf.save()
                 return 'dnc-csrf="{}"'.format(csrf.authorization_token)
             except InvalidParameterTypeError:

@@ -125,6 +125,7 @@ class Registry:
             try:
                 args = ast.literal_eval(call_csrf.args)
             except:
+                traceback.print_exc()
                 pass
             call_csrf.delete()
 
