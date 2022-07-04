@@ -17,6 +17,7 @@ class NativeFunctionNode(template.Node):
 
     def __init__(self, function_name, args):
         self.function_name = function_name
+        self.args = args
 
     def render(self, context):
         from native_call.models import FunctionCallCSRF

@@ -109,6 +109,7 @@ class Registry:
             return HttpResponse("{}", status=405)
 
         from . import models
+        args = []
         with transaction.atomic():
             call_csrf = get_object_or_404(
                 models.FunctionCallCSRF,
@@ -121,15 +122,14 @@ class Registry:
             new_call_csrf.user_id = request.user.id
             new_call_csrf.function_name = call_csrf.function_name
             new_call_csrf.save()
+            try:
+                args = ast.literal_eval(call_csrf.args)
+            except:
+                pass
             call_csrf.delete()
 
         function_name = str(call_csrf.function_name)
         
-        args = []
-        try:
-            args = ast.literal_eval(call_csrf.args)
-        except:
-            pass
 
         params = args + (request.POST.getlist('params[]') or [])
 
