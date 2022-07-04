@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-native-call',
-    version='0.0.6.2',
+    version='0.0.6.3',
     packages=find_packages(),
     package_dir={'native_call': 'native_call'},
     package_data={'native_call': ['templates/native_call/*', 'migrations/*']},

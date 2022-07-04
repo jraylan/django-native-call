@@ -23,27 +23,19 @@ class NativeFunctionNode(template.Node):
         from native_call.models import FunctionCallCSRF
         function = registry.get_function(self.function_name)
 
+
         parsedArgs = []
+
         for arg in self.args:
-            ob = None
-            for a in arg.split('.'):
-                el = ob or context
-                if a.isdigit() and isinstance(el, list):
-                    ob = el[int(a)]
-                else:
-                    try: 
-                        ob = el.__getattribute__(a)
-                    except:
-                        try:
-                            if el in ob:
-                                ob = ob[a]
-                        except:
-                            ob = None
-                            break
-            if ob:
-                parsedArgs.append(ob)
-            else:
+            if arg.literal:
                 parsedArgs.append(arg)
+                continue
+            try:
+                parsedArgs.append(
+                    arg.resolve(context)
+                )
+            except InvalidParameterTypeError as e:
+                raise template.TemplateSyntaxError(str(e))
 
         if function:
             try:
@@ -66,4 +58,9 @@ def native_function(parser, token):
         tag_name, function_name = bits[:2]
     except ValueError:
         raise template.TemplateSyntaxError("%r tag requires at least one argument" % token.contents.split()[0])
-    return NativeFunctionNode(function_name, bits[2:])
+    args = bits[2:]
+    parsed_args = []
+    if args:
+        for a in args:
+            parsed_args.append(template.Variable(a))
+    return NativeFunctionNode(function_name, parsed_args)
