@@ -27,8 +27,19 @@ class NativeFunctionNode(template.Node):
         for arg in self.args:
             ob = None
             for a in arg.split('.'):
-                if a in (ob or context):
-                    ob = (ob or context)[a]
+                el = ob or context
+                if a.isdigit() and isinstance(el, list):
+                    ob = el[int(a)]
+                else:
+                    try: 
+                        ob = el.__getattribute__(a)
+                    except:
+                        try:
+                            if el in ob:
+                                ob = ob[a]
+                        except:
+                            ob = None
+                            break
             if ob:
                 parsedArgs.append(ob)
             else:
