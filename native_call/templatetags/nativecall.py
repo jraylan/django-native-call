@@ -15,7 +15,7 @@ def dnc_script():
 
 class NativeFunctionNode(template.Node):
 
-    def __init__(self, function_name):
+    def __init__(self, function_name, args):
         self.function_name = function_name
 
     def render(self, context):
@@ -27,6 +27,7 @@ class NativeFunctionNode(template.Node):
                 csrf = FunctionCallCSRF()
                 csrf.function_name = self.function_name
                 csrf.user = context['request'].user
+                csrf.args = str(self.args)
                 csrf.save()
                 return 'dnc-csrf="{}"'.format(csrf.authorization_token)
             except InvalidParameterTypeError:
@@ -36,8 +37,9 @@ class NativeFunctionNode(template.Node):
 
 @register.tag
 def native_function(parser, token):
+    bits = token.split_contents()
     try:
-        tag_name, function_name = token.split_contents()
+        tag_name, function_name = bits[:2]
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires exactly one argument" % token.contents.split()[0])
-    return NativeFunctionNode(function_name)
+        raise template.TemplateSyntaxError("%r tag requires at least one argument" % token.contents.split()[0])
+    return NativeFunctionNode(function_name, bits[2:])

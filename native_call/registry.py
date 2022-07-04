@@ -1,3 +1,4 @@
+import ast
 import traceback
 
 from django.db import transaction
@@ -124,7 +125,13 @@ class Registry:
 
         function_name = str(call_csrf.function_name)
         
-        params = request.POST.getlist('params[]') or []
+        args = []
+        try:
+            args = ast.literal_eval(call_csrf.args)
+        except:
+            pass
+
+        params = args + (request.POST.getlist('params[]') or [])
 
         function = self.get_function(function_name)
             

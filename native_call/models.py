@@ -6,6 +6,7 @@ import uuid
 class FunctionCallCSRF(models.Model):
     function_name = models.CharField(max_length=100)
     authorization_token = models.CharField(max_length=36, unique=True)
+    args = models.TextField(blank=True, default='')
     user = models.ForeignKey(
         get_user_model(),
         null=False,
