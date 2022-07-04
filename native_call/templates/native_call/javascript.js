@@ -4,6 +4,8 @@
         constructor(){
         }
         load_function(event){
+            if (event.originalEvent)
+                event = event.originalEvent;
             if(!(event instanceof Event)){
                 throw("Argument must be a event.")
             }
