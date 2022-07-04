@@ -117,17 +117,15 @@ class Registry:
                 user_id=request.user.id
             )
             call_csrf = models.FunctionCallCSRF.objects.select_for_update().get(id=call_csrf.id)
+            call_csrf.function_name = call_csrf.function_name
+            call_csrf.authorization_token = None
+            call_csrf.save()
 
-            new_call_csrf = models.FunctionCallCSRF()
-            new_call_csrf.user_id = request.user.id
-            new_call_csrf.function_name = call_csrf.function_name
-            new_call_csrf.save()
             try:
                 args = ast.literal_eval(call_csrf.args)
             except:
                 traceback.print_exc()
                 pass
-            call_csrf.delete()
 
         function_name = str(call_csrf.function_name)
         
@@ -153,7 +151,7 @@ class Registry:
             traceback.print_exc()
             response = HttpResponse('{}', status=500)
 
-        response['X-DNC-CSRF'] = new_call_csrf.authorization_token
+        response['X-DNC-CSRF'] = call_csrf.authorization_token
         
         return response
 
