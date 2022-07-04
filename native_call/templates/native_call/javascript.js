@@ -33,7 +33,7 @@
                                     try{
                                         resolve(JSON.parse(ajax.responseText));
                                     }catch(e){
-                                        reject(ajax.status);
+                                        resolve(ajax.responseText)
                                     }
                                 }
                                 else{
