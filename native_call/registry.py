@@ -147,6 +147,8 @@ class Registry:
                     response = HttpResponse('{}', status=500)
                 else:
                     response = HttpResponse(result, status=200)
+        except ErroResponse as e:
+            response = HttpResponse(e.message, status=e.status)
         except Exception:
             traceback.print_exc()
             response = HttpResponse('{}', status=500)
