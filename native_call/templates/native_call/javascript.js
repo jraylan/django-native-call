@@ -29,20 +29,21 @@
                         ajax.open("POST", "{% url 'nativecall_call' %}");
                         ajax.onreadystatechange = ()=>{
                             if(ajax.readyState == 4){
+                                let callback = reject
                                 if(ajax.status == 200){
-                                    try{
-                                        resolve(JSON.parse(ajax.responseText));
-                                    }catch(e){
-                                        resolve(ajax.responseText)
-                                    }
-                                }
-                                else{
-                                    reject(ajax.status);
+                                    callback = resolve
                                 }
                                 csrf = ajax.getResponseHeader("X-DNC-CSRF")
                                 if(csrf){
                                     event.target.setAttribute("dnc-csrf", csrf)
                                 }
+                                let response = ''
+                                try {
+                                    response = JSON.parse(ajax.responseText)
+                                } catch (e) {
+                                    response = ajax.responseText
+                                }
+                                callback(response,  ajax.status)
                             }
                         }
                         ajax.send(formData);
